@@ -28,7 +28,7 @@ checksums       ${name}-${version}.tar.gz md5   ab22f1b7f098a90d803a3abb94d23f7e
 
 depends_lib     port:pcre port:zlib
 
-# patchfiles      patch-auto-install.diff patch-conf-nginx.conf.diff
+patchfiles      patch-auto-install.diff patch-conf-nginx.conf.diff
 
 set nginx_confdir       ${prefix}/etc/${name}
 set nginx_logdir        ${prefix}/var/log/${name}
