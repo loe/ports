@@ -1,0 +1,68 @@
+--- Portfile.orig	2008-12-28 23:29:23.000000000 -0800
++++ Portfile	2009-05-10 01:34:53.000000000 -0700
+@@ -3,7 +3,7 @@
+ PortSystem 1.0
+ 
+ name            nginx
+-version         0.6.32
++version         0.6.36
+ categories      www mail
+ platforms       darwin
+ maintainers     boeyms openmaintainer
+@@ -18,10 +18,13 @@
+                     rich feature set, simple configuration, and low resource \
+                     consumption.
+ homepage        http://nginx.net/
+-master_sites    http://sysoev.ru/nginx
+-checksums       md5     c09a2ace3c91f45dabbb608b11e48ed1 \
+-                sha1    346166171477c3e78759bdbbc8461107d8475269 \
+-                rmd160  06749c5bf834a3f7e82ad3122a5db457c193d117
++master_sites    http://sysoev.ru/nginx/:source \
++                http://www.grid.net.ru/nginx/download/:upload
++
++distfiles       ${name}-${version}.tar.gz:source
++
++checksums       ${name}-${version}.tar.gz md5   15cce6102a2efcf4d4acde9bb71ea6d3 \
++                                          sha1  d5e81aa56a35cfebb638ab88b6a804acf0f779b7
+ 
+ depends_lib     port:pcre port:zlib
+ 
+@@ -33,6 +36,12 @@
+ 
+ set nginx_pidfile       ${nginx_rundir}/${name}.pid
+ 
++set upload_version      2.0.8
++set upload_md5          308d43743158263b0d5016aeffadaaa7
++set upload_sha1         b81e8ebb8c2bd6a6b85200eb176831da3563e55d
++
++set passenger_version   2.2.2
++
+ configure.args-append \
+             --with-cc-opt=\"${configure.cppflags} ${configure.cflags}\" \
+             --with-ld-opt=\"${configure.ldflags}\" \
+@@ -136,3 +145,25 @@
+     depends_lib-append      port:google-perftools
+     configure.args-append   --with-google_perftools_module
+ }
++
++variant upload description {Enable Valery Kholodkovs Upload Module} {
++    distfiles-append nginx_upload_module-${upload_version}.tar.gz:upload
++    checksums-append nginx_upload_module-${upload_version}.tar.gz   md5   ${upload_md5} \
++                                                                    sha1  ${upload_sha1}
++
++    post-extract {
++      system "tar -zxf ${distpath}/nginx_upload_module-${upload_version}.tar.gz -C ${worksrcpath}/src/"
++    }
++    
++    configure.args-append   --add-module=${worksrcpath}/src/nginx_upload_module-${upload_version}
++}
++
++variant passenger description {Enable Phusion Passenger} {
++    depends_lib-append port:rb-rubygems
++    
++    post-extract {
++      system "/opt/local/bin/gem install passenger --version '${passenger_version}'"
++    }
++    
++    configure.args-append   --add-module=${prefix}/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/ext/nginx
++}
