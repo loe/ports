@@ -3,7 +3,7 @@
 PortSystem 1.0
 
 name            nginx
-version         0.7.62
+version         0.7.63
 categories      www mail
 platforms       darwin
 maintainers     boeyms openmaintainer
@@ -19,7 +19,8 @@ long_description    Nginx ("engine x") is a high-performance HTTP(S) server \
                     consumption.
 homepage        http://nginx.net/
 master_sites    http://sysoev.ru/nginx/:source \
-                http://www.grid.net.ru/nginx/download/:upload
+                http://www.grid.net.ru/nginx/download/:upload \
+                http://wiki.nginx.org/:zip
 
 distfiles       ${name}-${version}.tar.gz:source
 
@@ -39,6 +40,10 @@ set nginx_pidfile       ${nginx_rundir}/${name}.pid
 set upload_version      2.0.10
 set upload_md5          5ac249003c6eb6ce919510a5ff9ffc79
 set upload_sha1         4d85ff5c8da4ce9a7831602f1671a586da722dd5
+
+set zip_version         1.1.5
+set zip_md5             efeeefecf8e7e88a49b99159a92d1aad
+set zip_sha1            e6523344d14bfc61d83c757ff2476b78b7c43668
 
 set passenger_version   2.2.5
 
@@ -167,4 +172,16 @@ variant passenger description {Enable Phusion Passenger} {
     }
     
     configure.args-append   --add-module=${prefix}/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/ext/nginx
+}
+
+variant zip description {Enable Evan Miller Zip Module} {
+    distfiles-append File:Mod_zip-${zip_version}.tar.gz:zip
+    checksums-append File:Mod_zip-${zip_version}.tar.gz         md5   ${zip_md5} \
+                                                                sha1  ${zip_sha1}
+
+    post-extract {
+      system "tar -zxf ${distpath}/File:Mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
+    }
+    
+    configure.args-append   --add-module=${worksrcpath}/src/File:Mod_zip-${zip_version}
 }
