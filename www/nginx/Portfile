@@ -20,12 +20,12 @@ long_description    Nginx ("engine x") is a high-performance HTTP(S) server \
 homepage        http://nginx.net/
 master_sites    http://sysoev.ru/nginx/:source \
                 http://www.grid.net.ru/nginx/download/:upload \
-                http://wiki.nginx.org/:zip
+                http://wiki.nginx.org/images/3/32/:zip
 
 distfiles       ${name}-${version}.tar.gz:source
 
-checksums       ${name}-${version}.tar.gz md5   ab22f1b7f098a90d803a3abb94d23f7e \
-                                          sha1  6eeb30d3daf7abcca351d9eba78b5adedd6331c5
+checksums       ${name}-${version}.tar.gz md5   ddbdbeca5206dcc0cd7a4d9cbac00240 \
+                                          sha1  a57a42d8d47f974beb49e150817ae7656e9e0f14
 
 depends_lib     port:pcre port:zlib
 
@@ -42,8 +42,8 @@ set upload_md5          5ac249003c6eb6ce919510a5ff9ffc79
 set upload_sha1         4d85ff5c8da4ce9a7831602f1671a586da722dd5
 
 set zip_version         1.1.5
-set zip_md5             efeeefecf8e7e88a49b99159a92d1aad
-set zip_sha1            e6523344d14bfc61d83c757ff2476b78b7c43668
+set zip_md5             cc8f5caa893f818176c08b48b2a613ca
+set zip_sha1            b732d0f8a7912f9101750d28b05b3ca9f2512216
 
 set passenger_version   2.2.5
 
@@ -175,13 +175,13 @@ variant passenger description {Enable Phusion Passenger} {
 }
 
 variant zip description {Enable Evan Miller Zip Module} {
-    distfiles-append File:Mod_zip-${zip_version}.tar.gz:zip
-    checksums-append File:Mod_zip-${zip_version}.tar.gz         md5   ${zip_md5} \
-                                                                sha1  ${zip_sha1}
+    distfiles-append Mod_zip-${zip_version}.tar.gz:zip
+    checksums-append Mod_zip-${zip_version}.tar.gz        sha1  ${zip_sha1} \
+                                                          md5   ${zip_md5}
 
     post-extract {
       system "tar -zxf ${distpath}/File:Mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
     }
     
-    configure.args-append   --add-module=${worksrcpath}/src/File:Mod_zip-${zip_version}
+    configure.args-append   --add-module=${worksrcpath}/src/Mod_zip-${zip_version}
 }
