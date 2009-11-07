@@ -180,7 +180,7 @@ variant zip description {Enable Evan Miller Zip Module} {
                                                           md5   ${zip_md5}
 
     post-extract {
-      system "tar -zxf ${distpath}/File:Mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
+      system "tar -zxf ${distpath}/Mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
     }
     
     configure.args-append   --add-module=${worksrcpath}/src/Mod_zip-${zip_version}
