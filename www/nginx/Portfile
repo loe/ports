@@ -175,13 +175,13 @@ variant passenger description {Enable Phusion Passenger} {
 }
 
 variant zip description {Enable Evan Miller Zip Module} {
-    distfiles-append Mod_zip-${zip_version}.tar.gz:zip
-    checksums-append Mod_zip-${zip_version}.tar.gz        sha1  ${zip_sha1} \
+    distfiles-append mod_zip-${zip_version}.tar.gz:zip
+    checksums-append mod_zip-${zip_version}.tar.gz        sha1  ${zip_sha1} \
                                                           md5   ${zip_md5}
 
     post-extract {
-      system "tar -zxf ${distpath}/Mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
+      system "tar -zxf ${distpath}/mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
     }
     
-    configure.args-append   --add-module=${worksrcpath}/src/Mod_zip-${zip_version}
+    configure.args-append   --add-module=${worksrcpath}/src/mod_zip-${zip_version}
 }
