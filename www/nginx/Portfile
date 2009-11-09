@@ -168,7 +168,7 @@ variant passenger description {Enable Phusion Passenger} {
     
     post-extract {
       system "/opt/local/bin/gem install passenger --version '${passenger_version}'"
-      system "/opt/local/bin/rake -f /opt/local/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/Rakefile nginx"
+      system "cd /opt/local/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/; /opt/local/bin/rake nginx"
     }
     
     configure.args-append   --add-module=${prefix}/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/ext/nginx
