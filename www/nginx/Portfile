@@ -3,7 +3,7 @@
 PortSystem 1.0
 
 name            nginx
-version         0.7.63
+version         0.7.64
 categories      www mail
 platforms       darwin
 maintainers     boeyms openmaintainer
@@ -24,8 +24,8 @@ master_sites    http://sysoev.ru/nginx/:source \
 
 distfiles       ${name}-${version}.tar.gz:source
 
-checksums       ${name}-${version}.tar.gz md5   ddbdbeca5206dcc0cd7a4d9cbac00240 \
-                                          sha1  a57a42d8d47f974beb49e150817ae7656e9e0f14
+checksums       ${name}-${version}.tar.gz md5   cfa97c0f784532820110b5eee57fef6d \
+                                          sha1  e4f71b9a908c23c3d7bfeb63e97c7f85c3d6eed7
 
 depends_lib     port:pcre port:zlib
 
@@ -45,9 +45,10 @@ set zip_version         1.1.5
 set zip_md5             cc8f5caa893f818176c08b48b2a613ca
 set zip_sha1            b732d0f8a7912f9101750d28b05b3ca9f2512216
 
-set passenger_version   2.2.5
+set passenger_version   2.2.7
 
 configure.args-append \
+            --with-debug \
             --with-cc-opt=\"${configure.cppflags} ${configure.cflags}\" \
             --with-ld-opt=\"${configure.ldflags}\" \
             --conf-path=${nginx_confdir}/${name}.conf \
