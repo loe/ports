@@ -42,8 +42,8 @@ set upload_md5          5ac249003c6eb6ce919510a5ff9ffc79
 set upload_sha1         4d85ff5c8da4ce9a7831602f1671a586da722dd5
 
 set zip_version         1.1.5
-set zip_md5             f6d8fc4ec9bd03bdd64af5485be2345b
-set zip_sha1            c5b29ab23b07490b59faa658997ca02b20dd0570
+set zip_md5             a0f9cae7079b6993f491c26c2695cad2
+set zip_sha1            5df07a25b57657914eb358e94f68272c40d80a0a
 
 set passenger_version   2.2.7
 
@@ -176,13 +176,13 @@ variant passenger description {Enable Phusion Passenger} {
 }
 
 variant zip description {Enable Modified Evan Miller Zip Module} {
-    distfiles-append mod_zip_onehub-${zip_version}.tar.gz:zip
-    checksums-append mod_zip_onehub-${zip_version}.tar.gz sha1  ${zip_sha1} \
+    distfiles-append mod_zip-${zip_version}.tar.gz:zip
+    checksums-append mod_zip-${zip_version}.tar.gz        sha1  ${zip_sha1} \
                                                           md5   ${zip_md5}
 
     post-extract {
-      system "tar -zxf ${distpath}/mod_zip_onehub-${zip_version}.tar.gz -C ${worksrcpath}/src/"
+      system "tar -zxf ${distpath}/mod_zip-${zip_version}.tar.gz -C ${worksrcpath}/src/"
     }
     
-    configure.args-append   --add-module=${worksrcpath}/src/mod_zip_onehub-${zip_version}
+    configure.args-append   --add-module=${worksrcpath}/src/mod_zip-${zip_version}
 }
