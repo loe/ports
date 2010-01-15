@@ -1,0 +1,82 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem              1.0
+
+name                    redis
+version                 1.20
+categories              databases
+maintainers             gmail.com:brianjlandau openmaintainer
+homepage                http://code.google.com/p/redis/
+platforms               darwin
+master_sites            googlecode
+
+description             A persistent key-value database with built-in net \
+                        interface written in ANSI-C for POSIX systems
+
+long_description        Redis is a key-value database. It is similar to \
+                        memcached but the dataset is not volatile, and values \
+                        can be strings, exactly like in memcached, but also \
+                        lists and sets with atomic operations to push/pop \
+                        elements. In order to be very fast but at the same \
+                        time persistent the whole dataset is taken in memory \
+                        and from time to time and/or when a number of changes \
+                        to the dataset are performed it is written \
+                        asynchronously on disk. You may lost the last few \
+                        queries that is acceptable in many applications but \
+                        it is as fast as an in memory DB (beta 6 of Redis \
+                        includes initial support for master-slave replication \
+                        in order to solve this problem by redundancy).
+
+checksums               md5     555730b90ad34839687cce0f3117cd6e \
+                        sha1    416121fdec212746523b707edd3efd0458175326 \
+                        rmd160  e0729d75b4ec0310047f5c649aedc1109616aa9f
+
+use_configure           no
+
+build.env-append        CC=${configure.cc}
+post-build {
+    copy ${filespath}/redis.conf.sample.in ${workpath}/redis.conf.sample
+    copy ${filespath}/redis-daemon.conf.sample.in ${workpath}/redis-daemon.conf.sample
+    reinplace "s|@PREFIX@|${prefix}|g" \
+        ${workpath}/redis.conf.sample \
+        ${workpath}/redis-daemon.conf.sample
+}
+
+destroot.keepdirs ${destroot}${prefix}/var/db/redis
+destroot {
+    xinstall -d ${destroot}${prefix}/var/db/redis
+    xinstall -m 0755 -W ${worksrcpath} \
+        redis-benchmark \
+        redis-cli \
+        redis-server \
+        ${destroot}${prefix}/bin
+    xinstall -m 0644 -W ${workpath} \
+        redis.conf.sample \
+        redis-daemon.conf.sample \
+        ${destroot}${prefix}/etc
+}
+
+post-activate {
+    if {![file exists ${prefix}/etc/redis-daemon.conf]} {
+        file copy ${prefix}/etc/redis-daemon.conf.sample \
+            ${prefix}/etc/redis-daemon.conf
+    }
+    if {![file exists ${prefix}/etc/redis.conf]} {
+        file copy ${prefix}/etc/redis.conf.sample \
+            ${prefix}/etc/redis.conf
+    }
+    touch ${prefix}/var/log/redis.log
+    ui_msg "
+=============================================================================
+* To start up a redis server instance use this command:
+* 
+*   redis-server ${prefix}/etc/redis.conf
+* 
+=============================================================================
+"
+}
+
+startupitem.create      yes
+startupitem.start       "${prefix}/bin/redis-server ${prefix}/etc/redis-daemon.conf"
+startupitem.stop        "echo \"SHUTDOWN\" | nc localhost 6379"
