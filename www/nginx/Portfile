@@ -3,7 +3,7 @@
 PortSystem 1.0
 
 name            nginx
-version         0.7.64
+version         0.7.65
 categories      www mail
 platforms       darwin
 maintainers     boeyms openmaintainer
@@ -20,12 +20,12 @@ long_description    Nginx ("engine x") is a high-performance HTTP(S) server \
 homepage        http://nginx.net/
 master_sites    http://sysoev.ru/nginx/:source \
                 http://www.grid.net.ru/nginx/download/:upload \
-                http://wiki.nginx.org/images/3/32/:zip
+                http://mod-zip.googlecode.com/files/:zip
 
 distfiles       ${name}-${version}.tar.gz:source
 
-checksums       ${name}-${version}.tar.gz md5   cfa97c0f784532820110b5eee57fef6d \
-                                          sha1  e4f71b9a908c23c3d7bfeb63e97c7f85c3d6eed7
+checksums       ${name}-${version}.tar.gz md5   abc4f76af450eedeb063158bd963feaa \
+                                          sha1  f2dcc8e015903ff1277e6fa427f9b7911c4f35ce
 
 depends_lib     port:pcre port:zlib
 
@@ -37,15 +37,15 @@ set nginx_rundir        ${prefix}/var/run/${name}
 
 set nginx_pidfile       ${nginx_rundir}/${name}.pid
 
-set upload_version      2.0.11
-set upload_md5          dd1d0f11201073938c8b4225d3aac9f9
-set upload_sha1         41e9921aa7bc45d5ceb48ff8cd55d722efee10c6
+set upload_version      2.0.12
+set upload_md5          55a2a38e4304dfb4bc977b0ec911f806
+set upload_sha1         628832e70f9b1a61b97ba57a2f9f0cd3149b28ea
 
 set zip_version         1.1.5
-set zip_md5             a0f9cae7079b6993f491c26c2695cad2
-set zip_sha1            5df07a25b57657914eb358e94f68272c40d80a0a
+set zip_md5             cc8f5caa893f818176c08b48b2a613ca
+set zip_sha1            b732d0f8a7912f9101750d28b05b3ca9f2512216
 
-set passenger_version   2.2.8
+set passenger_version   2.2.11
 
 configure.args-append \
             --with-debug \
