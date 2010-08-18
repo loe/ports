@@ -3,7 +3,7 @@
 PortSystem 1.0
 
 name            nginx
-version         0.7.65
+version         0.7.67
 categories      www mail
 platforms       darwin
 maintainers     boeyms openmaintainer
@@ -24,8 +24,8 @@ master_sites    http://sysoev.ru/nginx/:source \
 
 distfiles       ${name}-${version}.tar.gz:source
 
-checksums       ${name}-${version}.tar.gz md5   abc4f76af450eedeb063158bd963feaa \
-                                          sha1  f2dcc8e015903ff1277e6fa427f9b7911c4f35ce
+checksums       ${name}-${version}.tar.gz md5   b6e175f969d03a4d3c5643aaabc6a5ff \
+                                          sha1  511a7c4b9f4296119e64eba54bd4ce241579e8bd
 
 depends_lib     port:pcre port:zlib
 
@@ -37,15 +37,15 @@ set nginx_rundir        ${prefix}/var/run/${name}
 
 set nginx_pidfile       ${nginx_rundir}/${name}.pid
 
-set upload_version      2.0.12
-set upload_md5          55a2a38e4304dfb4bc977b0ec911f806
-set upload_sha1         628832e70f9b1a61b97ba57a2f9f0cd3149b28ea
+set upload_version      2.0.12a
+set upload_md5          47b9636a55fe07baba8e3aab2a00ceef
+set upload_sha1         87740f3f7e4a0381e177adfbebbe5522bbca1c28
 
-set zip_version         1.1.5
-set zip_md5             cc8f5caa893f818176c08b48b2a613ca
-set zip_sha1            b732d0f8a7912f9101750d28b05b3ca9f2512216
+set zip_version         1.1.5a
+set zip_md5             adf36c9a5e8ff53b146f008bb6f93c41
+set zip_sha1            2ae9ad693b3f55f0f3d31356c6c7e5aa65febbc9
 
-set passenger_version   2.2.11
+set passenger_version   2.2.15
 
 configure.args-append \
             --with-debug \
@@ -165,12 +165,12 @@ variant upload description {Enable Valery Kholodkovs Upload Module} {
 }
 
 variant passenger description {Enable Phusion Passenger} {
-    depends_lib-append port:rb-rubygems
-    
-    post-extract {
-      system "/opt/local/bin/gem install passenger --version '${passenger_version}'"
-      system "cd /opt/local/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/; /opt/local/bin/rake nginx"
-    }
+  #  depends_lib-append port:rb-rubygems
+  #  
+  #  post-extract {
+  #    system "/opt/local/bin/gem install passenger --version '${passenger_version}'"
+  #    system "cd /opt/local/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/; /opt/local/bin/rake nginx"
+  #  }
     
     configure.args-append   --add-module=${prefix}/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/ext/nginx
 }
