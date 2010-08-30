@@ -37,9 +37,9 @@ set nginx_rundir        ${prefix}/var/run/${name}
 
 set nginx_pidfile       ${nginx_rundir}/${name}.pid
 
-set upload_version      2.0.12a
-set upload_md5          47b9636a55fe07baba8e3aab2a00ceef
-set upload_sha1         87740f3f7e4a0381e177adfbebbe5522bbca1c28
+set upload_version      2.0.12b
+set upload_md5          662edc0c6eb81c5cb2a158a1f155de24
+set upload_sha1         d7ce9189174eaa5b268993cb3e173e6b91cdeadc
 
 set zip_version         1.1.5a
 set zip_md5             adf36c9a5e8ff53b146f008bb6f93c41
