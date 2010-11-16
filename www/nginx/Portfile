@@ -41,9 +41,9 @@ set upload_version      2.0.12b
 set upload_md5          662edc0c6eb81c5cb2a158a1f155de24
 set upload_sha1         d7ce9189174eaa5b268993cb3e173e6b91cdeadc
 
-set zip_version         1.1.5a
-set zip_md5             adf36c9a5e8ff53b146f008bb6f93c41
-set zip_sha1            2ae9ad693b3f55f0f3d31356c6c7e5aa65febbc9
+set zip_version         1.1.6
+set zip_md5             bad2c11552f34f5424d4a5168fd9f371
+set zip_sha1            b241e624cf98c3ae45d289df20df1132ab4f76d5
 
 set passenger_version   2.2.15
 
