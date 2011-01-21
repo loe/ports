@@ -1,0 +1,20 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem 1.0
+
+name            lib_mysqludf_preg
+version         1.0.1
+categories      database
+platforms       darwin
+maintainers     onehub.com:lcaplan
+description     PCRE functions for mysql
+homepage        http://www.mysqludf.org/lib_mysqludf_preg/
+
+master_sites    http://www.mysqludf.org/lib_mysqludf_preg/ 
+checksums       md5 e21b635d85ad5982af4102b33c4056e7 \
+                sha1 a92a58a5c20b71723624da28ed3ee5670fe25405
+
+depends_lib     port:pcre
+configure.args  --with-mysql=/opt/local/lib/mysql5/bin/mysql_config --with-pcre=/opt/local
+
