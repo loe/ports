@@ -3,7 +3,7 @@
 PortSystem 1.0
 
 name            nginx
-version         0.7.67
+version         0.8.55
 categories      www mail
 platforms       darwin
 maintainers     boeyms openmaintainer
@@ -24,8 +24,8 @@ master_sites    http://sysoev.ru/nginx/:source \
 
 distfiles       ${name}-${version}.tar.gz:source
 
-checksums       ${name}-${version}.tar.gz md5   b6e175f969d03a4d3c5643aaabc6a5ff \
-                                          sha1  511a7c4b9f4296119e64eba54bd4ce241579e8bd
+checksums       ${name}-${version}.tar.gz md5   10ea2cd34f894631bf4b306b7139195b \
+                                          sha1  c105dc35ba01990e2508b21381d180d034c9ed43
 
 depends_lib     port:pcre port:zlib
 
@@ -38,14 +38,16 @@ set nginx_rundir        ${prefix}/var/run/${name}
 set nginx_pidfile       ${nginx_rundir}/${name}.pid
 
 set upload_version      2.0.12c
-set upload_md5          c761d6fae4c4f2b1184638b37cf6471f
-set upload_sha1         70e79f4eefe827e8e44dbbfb3e507656c7784dc5
+set upload_md5          184bee88a4e9ceafd7854087955b30b3
+set upload_sha1         609269fc956c0cfa19e5054662e15a74e46971dc
 
 set zip_version         1.1.6
-set zip_md5             bad2c11552f34f5424d4a5168fd9f371
-set zip_sha1            b241e624cf98c3ae45d289df20df1132ab4f76d5
+set zip_md5             eb825164bd0b3e90d794491dc5ad6da3
+set zip_sha1            1a1021b6c4d7699661b4a4eaeb9bc979856612c2
 
-set passenger_version   2.2.15
+set headers_version     0.13
+set headers_md5         4936c996129d625c1c03e98bf9831f98
+set headers_sha1        0840417238cf056350825383f69c3ad4ccc5b4d4
 
 configure.args-append \
             --with-debug \
@@ -164,17 +166,6 @@ variant upload description {Enable Valery Kholodkovs Upload Module} {
     configure.args-append   --add-module=${worksrcpath}/src/nginx_upload_module-${upload_version}
 }
 
-variant passenger description {Enable Phusion Passenger} {
-  #  depends_lib-append port:rb-rubygems
-  #  
-  #  post-extract {
-  #    system "/opt/local/bin/gem install passenger --version '${passenger_version}'"
-  #    system "cd /opt/local/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/; /opt/local/bin/rake nginx"
-  #  }
-    
-    configure.args-append   --add-module=${prefix}/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/ext/nginx
-}
-
 variant zip description {Enable Modified Evan Miller Zip Module} {
     distfiles-append mod_zip-${zip_version}.tar.gz:zip
     checksums-append mod_zip-${zip_version}.tar.gz        sha1  ${zip_sha1} \
@@ -185,4 +176,16 @@ variant zip description {Enable Modified Evan Miller Zip Module} {
     }
     
     configure.args-append   --add-module=${worksrcpath}/src/mod_zip-${zip_version}
+}
+
+variant headers description {Enable agentzh's Headers More Module} {
+    distfiles-append headers-more-${headers_version}.tar.gz:zip
+    checksums-append headers-more-${headers_version}.tar.gz   sha1  ${headers_sha1} \
+                                                              md5   ${headers_md5}
+
+    post-extract {
+      system "tar -zxf ${distpath}/headers-more-${headers_version}.tar.gz -C ${worksrcpath}/src/"
+    }
+    
+    configure.args-append   --add-module=${worksrcpath}/src/headers-more-${headers_version}
 }
